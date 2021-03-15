@@ -18,7 +18,7 @@ Los pasos para realizar la instalación son los siguientes:
 
 - git clone
 - composer update
-- importar la base de datos (ubicada en el root del directorio)
+- importar la base de datos america_virtual.sql (ubicada en el root del directorio)
 - php artisan serve
 
 ## Datos de acceso
