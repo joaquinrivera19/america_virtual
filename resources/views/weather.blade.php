@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>AMERICA VIRTUAL</title>
 
@@ -64,7 +65,21 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">AMERICA VIRTUAL</a>
+
+            @guest
             <button class="btn btn-light nav-link sesion" onclick="openForm()">INICIAR SESIÓN</button>
+            @else
+            <a class="navbar-brand" href="#">Bienvenido, {{ Auth::user()->name }}</a>
+
+            <a class="btn btn-light nav-link sesion" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Cerrar Sesión
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+
+            @endguest
 
         </div>
     </nav>
@@ -186,12 +201,25 @@
 
 
     <div class="form-popup" id="myForm">
-        <form action="/action_page.php" class="form-container">
-            <label>Usuario</label>
-            <input type="text" placeholder="americavirtual@gmail.com" name="usuario" required>
+        <form method="POST" action="{{ route('login') }}" class="form-container">
+            @csrf
+            <label style="margin-top: 15px;">Usuario</label>
+            <input id="email" type="email" placeholder="americavirtual@gmail.com" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-            <label>Contraseña</label>
-            <input type="password" placeholder="" name="password" required>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+
+            <label style="margin-top: 15px;">Contraseña</label>
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
 
             <button type="submit" class="btn">INICIAR SESIÓN</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Cerrar</button>
@@ -210,6 +238,11 @@
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
+
+        $(document).ready(function() {
+            document.getElementById("myForm").style.display = "block";
+        });
+
     </script>
 
 </body>

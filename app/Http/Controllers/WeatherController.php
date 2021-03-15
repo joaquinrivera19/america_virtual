@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaction;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -56,6 +57,10 @@ class WeatherController extends Controller
         $weathers_actual = $response_actual->json();
     
         $resultado = $this->getWeather($pais,$ciudad);
+
+        $transaction = new Transaction();
+        $transaction->descripcion = $pais;
+        $transaction->save();
 
         //dump($resultado);
         //dd();
