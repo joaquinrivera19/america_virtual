@@ -1,6 +1,6 @@
-## Tecnologias utilizadas
+## Tecnologías utilizadas
 
-Para desarrollar este proyecto se han utilizado las siguientes tecnologias:
+Para desarrollar este proyecto se han utilizado las siguientes tecnologías:
  - Framework Laravel 7.29.
  - MySQL.
  - Carbon - Una simple extensión de la API de PHP para DateTime.
